@@ -34,7 +34,7 @@ class Oh
   end
 
   def account
-    @account or raise "Account not set; call Oh#account_info() to get a list."
+    @account or raise "Account not set; call Oh#account_info() to get a list, then set using Oh#account=(id)."
   end
 
   def token
@@ -64,18 +64,36 @@ class Oh
   def account_info
     # TODO: process response doc
     # Return list of accounts and ids
-    request(message("account.info", :authToken => token))
+    request(message_with_token("account.info"))
   end
 
   def quote(symbol)
-    request(message("view.quote", :authToken => token, :account => account, :description => true, :fundamentals => true, :symbol => symbol))
+    request(message_with_account("view.quote",
+                                 :symbol => symbol,
+                                 :description => true,
+                                 :fundamentals => true))
   end
 
   def option_chain(symbol)
-    request(message("view.chain", :authToken => token, :account => account, :symbol => symbol, :greeks => true, :bs => true, :weeklies => true, :quarterlies => true, :ntm => 10, :quotesAfter => 0))
+    request(message_with_account("view.chain",
+                                 :symbol => symbol,
+                                 :greeks => true,
+                                 :weeklies => true,
+                                 :quarterlies => true,
+                                 :quotesAfter => 0,
+                                 :ntm => 10, # ?
+                                 :bs => true)) # ?
   end
 
-  def message(action, data)
+  def message_with_token(action, data = {})
+    message(action, {:authToken => token}.merge(data))
+  end
+
+  def message_with_account(action, data = {})
+    message_with_token(action, {:account => account}.merge(data))
+  end
+
+  def message(action, data = {})
     chunks = []
 
     chunks << "<EZMessage action='#{action}'>"
