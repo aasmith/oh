@@ -71,6 +71,10 @@ class Oh
     request(message("view.quote", :authToken => token, :account => account, :description => true, :fundamentals => true, :symbol => symbol))
   end
 
+  def option_chain(symbol)
+    request(message("view.chain", :authToken => token, :account => account, :symbol => symbol, :greeks => true, :bs => true, :weeklies => true, :quarterlies => true, :ntm => 10, :quotesAfter => 0))
+  end
+
   def message(action, data)
     chunks = []
 
