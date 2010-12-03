@@ -114,17 +114,9 @@ class Oh
   end
 
   def request(body)
-    client = Net::HTTP.new("www.optionshouse.com", 443)
-    client.use_ssl = true
-
-    if ENV["SSL_PATH"] && File.exist?(ENV["SSL_PATH"])
-      client.ca_path = ENV["SSL_PATH"]
-      client.verify_mode = OpenSSL::SSL::VERIFY_PEER
-    end
-
     path = "/m"
 
-    response = client.post(path, body, HEADERS)
+    response = connection.post(path, body, HEADERS)
     data = response.body
 
     out = response["content-encoding"] =~ /gzip/ ? Zlib::GzipReader.new(StringIO.new(data)).read : data
@@ -150,6 +142,20 @@ class Oh
       warn "Unable to parse: #{out.inspect}"
       raise
     end
+  end
+
+  def connection
+    return @client if @client
+
+    client = Net::HTTP.new("www.optionshouse.com", 443)
+    client.use_ssl = true
+
+    if ENV["SSL_PATH"] && File.exist?(ENV["SSL_PATH"])
+      client.ca_path = ENV["SSL_PATH"]
+      client.verify_mode = OpenSSL::SSL::VERIFY_PEER
+    end
+
+    @client = client
   end
 
   AuthError = Class.new(StandardError)
