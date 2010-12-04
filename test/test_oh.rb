@@ -37,6 +37,19 @@ class TestOh < Test::Unit::TestCase
       "should have document with a root node of response"
   end
 
+  def test_request_handles_deflate
+    flexmock(Net::HTTP).new_instances.should_receive(
+      :post => mocked_response(
+        Zlib::Deflate.deflate("<response></response>"),
+        "content-encoding" => "deflate"
+    ))
+
+    doc = @oh.request("<request></request>")
+
+    assert_equal "response", doc.root.name,
+      "should have document with a root node of response"
+  end
+
   def test_request_handles_plaintext
     flexmock(Net::HTTP).new_instances.should_receive(
       :post => mocked_response("<response></response>")

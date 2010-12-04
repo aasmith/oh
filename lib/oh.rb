@@ -119,7 +119,11 @@ class Oh
     response = connection.post(path, body, HEADERS)
     data = response.body
 
-    out = response["content-encoding"] =~ /gzip/ ? Zlib::GzipReader.new(StringIO.new(data)).read : data
+    out = case response["content-encoding"]
+      when /gzip/    then Zlib::GzipReader.new(StringIO.new(data)).read
+      when /deflate/ then Zlib::Inflate.inflate(data)
+      else data
+    end
 
     if $VERBOSE
       puts "Sent:"
