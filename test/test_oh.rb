@@ -66,10 +66,16 @@ class TestOh < Test::Unit::TestCase
       :post => mocked_response("<invalid></xml>")
     )
 
+    old_stderr = $stderr
+    $stderr = StringIO.new
+
     assert_raises Nokogiri::XML::SyntaxError do
       doc = @oh.request("<request></request>")
     end
 
+    assert_match /Unable to parse/, $stderr.string
+
+    $stderr = old_stderr
   end
 
   def test_request_sends_consistent_header_and_path
