@@ -61,6 +61,17 @@ class TestOh < Test::Unit::TestCase
       "should have document with a root node of response"
   end
 
+  def test_request_raises_with_malformed_xml
+    flexmock(Net::HTTP).new_instances.should_receive(
+      :post => mocked_response("<invalid></xml>")
+    )
+
+    assert_raises Nokogiri::XML::SyntaxError do
+      doc = @oh.request("<request></request>")
+    end
+
+  end
+
   def test_request_sends_consistent_header_and_path
   end
 
