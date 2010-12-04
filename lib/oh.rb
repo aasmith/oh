@@ -137,7 +137,7 @@ class Oh
     end
 
     begin
-      Nokogiri.parse(out)
+      Nokogiri.parse(out, nil, nil, Nokogiri::XML::ParseOptions::STRICT)
     rescue
       warn "Unable to parse: #{out.inspect}"
       raise
