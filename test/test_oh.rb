@@ -79,6 +79,16 @@ class TestOh < Test::Unit::TestCase
   end
 
   def test_request_sends_consistent_header_and_path
+    m = flexmock("Net::HTTP instance")
+    m.should_ignore_missing
+    m.should_receive(:post).
+      with("/m", "<request></request>", Oh::HEADERS).
+      and_return(mocked_response("<response></response>")).
+      once
+
+    flexmock(Net::HTTP).should_receive(:new).once.and_return(m)
+
+    @oh.request("<request></request>")
   end
 
   def test_request_parses_output
