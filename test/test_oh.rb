@@ -91,9 +91,6 @@ class TestOh < Test::Unit::TestCase
     @oh.request("<request></request>")
   end
 
-  def test_request_parses_output
-  end
-
   def test_connection_reuses_single_client
     assert_same @oh.connection, @oh.connection, "Should be cached"
   end
