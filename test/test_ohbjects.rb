@@ -7,51 +7,60 @@ require "ohbjects"
 class TestOhbjects < Test::Unit::TestCase
 
   def test_option_builder_claims_to_build_option_quote
-    assert Oh::OptionBuilder.build?(Nokogiri(OPTION_QUOTE))
+    assert Ohbjects::OptionBuilder.build?(Nokogiri(OPTION_QUOTE))
   end
 
   def test_option_builder_build
-    fragment = Nokogiri(OPTION_QUOTE).search(Oh::OptionBuilder.spec).first
+    fragment = Nokogiri(OPTION_QUOTE).search(Ohbjects::OptionBuilder.spec).first
 
-    options = Oh::OptionBuilder.build(fragment)
+    options = Ohbjects::OptionBuilder.build(fragment)
 
     assert_equal 2, options.size, "Should have built two options"
 
-    assert_equal [Oh::Put, Oh::Call], options.map{|x|x.class},
+    assert_equal [Ohbjects::Put, Ohbjects::Call], options.map{|x|x.class},
       "Should be a put and a call"
 
     put = options.shift
     call = options.shift
 
-    # ...
+    # TODO: assert individual fields
 
   end
 
   def test_objectify
-    oh = Oh.new("bob", "password")
+    o = Object.new
+    class << o
+      include Ohbjects
+    end
 
     klass = Class.new
 
     klass.instance_eval do
-      extend Oh::Buildable
+      extend Ohbjects::Buildable
       builds "foo"
     end
 
-    flexmock(klass).should_receive(:build => "build-output").once
+    flexmock(klass).should_receive(:build => "built-foo").once
 
-    Oh::REGISTRY.clear
-    Oh::REGISTRY << klass
+    Ohbjects::REGISTRY.clear
+    Ohbjects::REGISTRY << klass
 
-    output = oh.objectify(Nokogiri("<doc><foo /></doc>"))
+    output = o.objectify(Nokogiri("<doc><foo /></doc>"))
 
-    assert_equal %w(build-output), output
+    assert_equal %w(built-foo), output
+  end
+
+  def test_activate_includes_ohbjects_into_oh
+    flexmock(Oh).should_receive(:include).with(Ohbjects).once
+
+    Ohbjects.activate
   end
 
   def test_buildable_build?
     klass = Class.new
 
     klass.instance_eval do
-      extend Oh::Buildable
+      extend Ohbjects::Buildable
       builds "foo"
     end
 
@@ -60,17 +69,23 @@ class TestOhbjects < Test::Unit::TestCase
   end
 
   def test_buildable_adds_to_registry
-    before = Oh::REGISTRY.size
+    before = Ohbjects::REGISTRY.size
 
     klass = Class.new
 
     klass.instance_eval do
-      extend Oh::Buildable
+      extend Ohbjects::Buildable
       builds "foo"
     end
 
-    assert_equal before + 1, Oh::REGISTRY.size
-    assert_equal klass, Oh::REGISTRY.pop
+    assert_equal before + 1, Ohbjects::REGISTRY.size
+    assert_equal klass, Ohbjects::REGISTRY.pop
+  end
+
+  def test_post_process_result_returns_objects
+  end
+
+  def test_expires_date_conversion
   end
 
 

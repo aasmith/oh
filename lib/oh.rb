@@ -125,7 +125,7 @@ class Oh
       else data
     end
 
-    if $VERBOSE
+    if $DEBUG
       puts "Sent:"
       puts body
       puts "-" * 80
@@ -140,12 +140,16 @@ class Oh
       puts
     end
 
-    begin
+    result = begin
       Nokogiri.parse(out, nil, nil, Nokogiri::XML::ParseOptions::STRICT)
     rescue
       warn "Unable to parse: #{out.inspect}"
       raise
     end
+
+    respond_to?(:post_process_request) ? 
+      post_process_request(result) : 
+      result
   end
 
   def connection

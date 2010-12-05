@@ -1,4 +1,13 @@
-class Oh
+# Adds an object representation to Oh responses:
+#
+#  require "ohbjects"
+#  Ohbjects.activate
+#
+# Then, any further calls to Oh methods that used to
+# return an XML doc will now return objects such as
+# Ohbjects::Call, Ohbjects::Put, etc.
+#
+module Ohbjects
   REGISTRY = []
 
   module Buildable
@@ -102,8 +111,6 @@ class Oh
   class Call < Option
   end
 
-  # TODO: use alias method chain to call this at the 
-  # end of each request()
   def objectify(doc)
     qualified_builders = 
       REGISTRY.select { |builder| builder.build?(doc) }
@@ -117,5 +124,15 @@ class Oh
     end
 
     objects
+  end
+
+  def post_process_request(result)
+    objectify(result)
+  end
+
+  class << self
+    def activate
+      Oh.send :include, self
+    end
   end
 end

@@ -18,6 +18,34 @@ class TestOh < Test::Unit::TestCase
     response
   end
 
+  def test_request_doesnt_delegate_when_not_present
+    flexmock(Net::HTTP).new_instances.should_receive(
+      :post => mocked_response("<response></response>")
+    )
+
+    flexmock(@oh) do |m|
+      m.should_receive(:post_process_request).never
+      m.should_receive(:respond_to?).
+        with(:post_process_request).and_return(false)
+    end
+
+    @oh.request("<request></request>")
+  end
+
+  def test_request_delegates
+    flexmock(Net::HTTP).new_instances.should_receive(
+      :post => mocked_response("<response></response>")
+    )
+
+    flexmock(@oh) do |m|
+      m.should_receive(:post_process_request).once
+      m.should_receive(:respond_to?).
+        with(:post_process_request).and_return(true)
+    end
+
+    @oh.request("<request></request>")
+  end
+
   def test_request_handles_gzip
     io = StringIO.new
 
