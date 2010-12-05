@@ -1,12 +1,8 @@
-# -*- ruby -*-
-
 require 'rubygems'
 require 'hoe'
 require './lib/oh.rb'
 
-Hoe.new('oh', Oh::VERSION) do |p|
-  # p.rubyforge_name = 'ohx' # if different than lowercase project name
-  # p.developer('FIX', 'FIX@example.com')
+Hoe.spec('oh') do |p|
+  p.developer('Andrew A Smith', 'andy@tinnedfruit.org')
 end
 
-# vim: syntax=Ruby
