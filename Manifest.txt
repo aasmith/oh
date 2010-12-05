@@ -6,5 +6,7 @@ Rakefile
 bin/oh
 lib/oh.rb
 lib/ohbjects.rb
+lib/ohbjects/options.rb
 test/test_oh.rb
 test/test_ohbjects.rb
+test/test_options.rb
