@@ -1,7 +1,10 @@
+.autotest
 History.txt
 Manifest.txt
-README.txt
+README.rdoc
 Rakefile
 bin/oh
 lib/oh.rb
+lib/ohbjects.rb
 test/test_oh.rb
+test/test_ohbjects.rb

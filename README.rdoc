@@ -1,14 +1,10 @@
 = oh
 
-* FIX (url)
+* http://github.com/aasmith/oh
 
 == DESCRIPTION:
 
-FIX (describe your package)
-
-== FEATURES/PROBLEMS:
-
-* FIX (list of features or problems)
+An API for OptionsHouse (http://optionshouse.com).
 
 == SYNOPSIS:
 
@@ -24,9 +20,7 @@ FIX (describe your package)
 
 == LICENSE:
 
-(The MIT License)
-
-Copyright (c) 2010 FIX
+Copyright (c) 2010 Andrew A. Smith
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
