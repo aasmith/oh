@@ -40,6 +40,19 @@ class TestOhbjects < Test::Unit::TestCase
     end
   end
 
+  def test_cannont_instantiate_options_directly
+    assert_nothing_raised "subclasses should be instantiable" do
+      assert_kind_of Ohbjects::Option, Ohbjects::Call.new
+      assert_kind_of Ohbjects::Option, Ohbjects::Put.new
+    end
+
+    ex = assert_raise ArgumentError do
+      Ohbjects::Option.new
+    end
+
+      assert_match /cannot be instantiated/, ex.message
+  end
+
   OPTION_QUOTE = <<-XML
     <optionQuote id="201012180000090000AA"
       series="Dec 10 9.0" strikeString="9.0" optionRoot="AA"
