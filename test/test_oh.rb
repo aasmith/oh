@@ -94,4 +94,17 @@ class TestOh < Test::Unit::TestCase
   def test_connection_reuses_single_client
     assert_same @oh.connection, @oh.connection, "Should be cached"
   end
+
+  def test_message
+    msg = @oh.message("test.action", :foo => nil, :bar => 2)
+
+    assert_match %r{<foo>null</foo>}, msg, "should convert nils to null"
+    assert_match %r{<bar>2</bar>}, msg, "should to_s all other objects"
+  end
+
+  def test_messages
+  end
+
+  def test_account_raises_when_not_set
+  end
 end

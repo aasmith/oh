@@ -81,8 +81,8 @@ class Oh
                                  :weeklies => true,
                                  :quarterlies => true,
                                  :quotesAfter => 0,
-                                 :ntm => 10, # ?
-                                 :bs => true)) # ?
+                                 :ntm => 10, # near the money
+                                 :bs => true)) # black-scholes?
   end
 
   def message_with_token(action, data = {})
