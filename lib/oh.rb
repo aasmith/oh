@@ -149,7 +149,7 @@ class Oh
   end
 
   def connection
-    return @client if @client
+    return @client if defined? @client
 
     client = Net::HTTP.new("www.optionshouse.com", 443)
     client.use_ssl = true
