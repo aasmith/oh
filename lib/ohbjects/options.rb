@@ -66,7 +66,7 @@ module Ohbjects
     def expires=(date_string)
       # Intentionally explict pattern to force 
       # parse errors should the format change.
-      Date.strptime(date_string, "%b %e, %Y")
+      @expires = Date.strptime(date_string, "%b %e, %Y")
     end
 
     def call?
