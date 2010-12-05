@@ -97,7 +97,7 @@ class TestOh < Test::Unit::TestCase
     old_stderr = $stderr
     $stderr = StringIO.new
 
-    assert_raises Nokogiri::XML::SyntaxError do
+    assert_raise Nokogiri::XML::SyntaxError do
       doc = @oh.request("<request></request>")
     end
 

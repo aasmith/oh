@@ -35,7 +35,7 @@ class TestOhbjects < Test::Unit::TestCase
     assert_equal 1, call.expires.month
     assert_equal 2011, call.expires.year
 
-    assert_raises ArgumentError, "other formats should be invalid" do
+    assert_raise ArgumentError, "other formats should be invalid" do
       call.expires = "2011-01-11"
     end
   end
