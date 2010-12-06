@@ -26,15 +26,15 @@ class Oh
   }
 
   attr_accessor :username, :password
-  attr_writer :account
+  attr_writer :account_id
 
   def initialize(username, password)
     self.username = username
     self.password = password
   end
 
-  def account
-    @account or raise "Account not set; call Oh#account_info() to get a list, then set using Oh#account=(id)."
+  def account_id
+    @account_id or raise "Account not set; call Oh#accounts() to get a list, then set using Oh#account_id=(id)."
   end
 
   def token
@@ -61,9 +61,7 @@ class Oh
     token
   end
 
-  def account_info
-    # TODO: process response doc
-    # Return list of accounts and ids
+  def accounts
     request(message_with_token("account.info"))
   end
 
@@ -90,7 +88,7 @@ class Oh
   end
 
   def message_with_account(action, data = {})
-    message_with_token(action, {:account => account}.merge(data))
+    message_with_token(action, {:account => account_id}.merge(data))
   end
 
   def message(action, data = {})
