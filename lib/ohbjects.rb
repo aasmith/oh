@@ -21,6 +21,15 @@ module Ohbjects
       !doc.search(@spec).empty?
     end
 
+    # Taken from active support.
+    def underscore(camel_cased_word)
+      camel_cased_word.to_s.
+        gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').
+        gsub(/([a-z\d])([A-Z])/,'\1_\2').
+        tr("-", "_").
+        downcase
+    end
+
     def self.extended(extender)
       REGISTRY << extender
     end
