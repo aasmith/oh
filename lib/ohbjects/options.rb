@@ -51,11 +51,12 @@ module Ohbjects
   end
 
   class Option
-    attr_accessor :id, :key, 
-      :expires, :strike, :root,
+    attr_accessor :id, :key, :strike, :root,
       :bid, :ask, :change, :volume, :open_interest,
       :iv, :delta, :gamma, :theta, :vega,
       :bids, :asks
+
+    attr_reader :expires
 
     def initialize
       if instance_of? Option

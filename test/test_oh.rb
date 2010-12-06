@@ -101,7 +101,7 @@ class TestOh < Test::Unit::TestCase
       doc = @oh.request("<request></request>")
     end
 
-    assert_match /Unable to parse/, $stderr.string
+    assert_match %r{Unable to parse}, $stderr.string
 
     $stderr = old_stderr
   end

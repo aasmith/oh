@@ -50,7 +50,7 @@ class TestOhbjects < Test::Unit::TestCase
       Ohbjects::Option.new
     end
 
-    assert_match /cannot be instantiated/, ex.message
+    assert_match %r{cannot be instantiated}, ex.message
   end
 
   OPTION_QUOTE = <<-XML
