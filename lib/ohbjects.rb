@@ -52,5 +52,7 @@ module Ohbjects
   end
 end
 
-require "ohbjects/options"
+Dir[File.join(File.dirname(__FILE__), 'ohbjects', '*.rb')].each do |fn|
+  require fn
+end
 
