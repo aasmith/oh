@@ -32,6 +32,26 @@ class TestOh < Test::Unit::TestCase
     @oh.request("<request></request>")
   end
 
+  def test_request_doesnt_delegate_when_asked_not_to
+    flexmock(Net::HTTP).new_instances.should_receive(
+      :post => mocked_response("<response></response>")
+    )
+
+    flexmock(@oh) do |m|
+      m.should_receive(:post_process_request).never
+      m.should_receive(:respond_to?).
+        with(:post_process_request).and_return(true)
+    end
+
+    @oh.request("<request></request>", false)
+  end
+
+  def test_request_without_callbacks_calls_request_with_correct_args
+    flexmock(@oh).should_receive(:request).with("foo", false).once
+
+    @oh.request_without_callbacks("foo")
+  end
+
   def test_request_delegates
     flexmock(Net::HTTP).new_instances.should_receive(
       :post => mocked_response("<response></response>")

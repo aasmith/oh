@@ -42,7 +42,7 @@ class Oh
   end
 
   def login
-    response = request(message("auth.login",
+    response = request_without_callbacks(message("auth.login",
                     :userName => username,
                     :password => password,
                     :organization => "OPHOUSE,KERSHNER",
@@ -113,7 +113,11 @@ class Oh
     "<EZList>#{messages.join}</EZList>"
   end
 
-  def request(body)
+  def request_without_callbacks(body)
+    request(body, false)
+  end
+
+  def request(body, with_callbacks = true)
     path = "/m"
 
     response = connection.post(path, body, HEADERS)
@@ -147,7 +151,7 @@ class Oh
       raise
     end
 
-    respond_to?(:post_process_request) ? 
+    with_callbacks && respond_to?(:post_process_request) ? 
       post_process_request(result) : 
       result
   end
