@@ -149,9 +149,17 @@ class Oh
       raise
     end
 
+    check_connection_status(result)
+
     with_callbacks && respond_to?(:post_process_request) ? 
       post_process_request(result) : 
       result
+  end
+
+  def check_connection_status(doc)
+    if doc.at("//errors/access[text()='denied']")
+      raise AuthError, "Access denied, token has expired?"
+    end
   end
 
   def connection
