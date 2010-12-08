@@ -66,10 +66,13 @@ class Oh
   end
 
   def quote(symbol)
-    request(message_with_account("view.quote",
-                                 :symbol => symbol,
-                                 :description => true,
-                                 :fundamentals => true))
+    request(messages(
+      message_with_account("view.quote",
+                           :symbol => symbol,
+                           :description => true,
+                           :fundamentals => true),
+      message_with_token("echo", :symbol => symbol)
+    ))
   end
 
   def option_chain(symbol)
@@ -107,7 +110,7 @@ class Oh
     chunks.join
   end
 
-  def messages(messages)
+  def messages(*messages)
     "<EZList>#{messages.join}</EZList>"
   end
 
