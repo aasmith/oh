@@ -86,6 +86,11 @@ class Oh
                                  :bs => true)) # black-scholes?
   end
 
+  # TODO: send this every 120 seconds?
+  def keep_alive
+    request(message_with_account("auth.keepAlive"))
+  end
+
   def message_with_token(action, data = {})
     message(action, {:authToken => token}.merge(data))
   end
