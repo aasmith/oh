@@ -1,24 +1,53 @@
-= oh
+# oh
 
 * http://github.com/aasmith/oh
 
-== DESCRIPTION:
+## Description
 
 An API for OptionsHouse (http://optionshouse.com).
 
-== SYNOPSIS:
+Currently provides a mechanism for pulling stock and option quotes.
 
-  FIX (code sample of usage)
+## Synopsis
 
-== REQUIREMENTS:
+```ruby
+  # The basic oh API. Calls to the API return parsed Nokogiri documents.
+  require 'oh'
 
-* FIX (list of requirements)
+  # An object wrapper around the basic api. Marshals above responses into
+  # handy Ruby objects, defined in lib/ohbjects.
+  require 'ohbjects'
+  Ohbjects.activate
 
-== INSTALL:
+  # You defined these vars somewhere else, right?
+  o = Oh.new(username, password)
 
-* FIX (sudo gem install, anything else)
+  # Use the virtual account so we don't accidentally spend all your
+  # hard-earned dollars on Frozen Pork Belly futures.
+  account = o.accounts.detect { |a| a.virtual? }
+  o.account_id = account.id
 
-== LICENSE:
+  # Bask is the glory of knowing the latest price for the 
+  # iPath Dow Jones-AIG Coffee Total Return Sub-Index ETN.
+  p o.quote("JO")
+
+  # Do something like this every 120 seconds or so, otherwise your
+  # token will expire.
+  o.keep_alive
+```
+
+## Requirements
+
+*  Nokogiri
+*  An OptionsHouse account
+
+## Install
+
+```
+  sudo gem install oh
+```
+
+## License
 
 Copyright (c) 2010 Andrew A. Smith
 
