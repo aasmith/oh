@@ -10,7 +10,7 @@ Currently provides a mechanism for pulling stock and option quotes.
 
 ## Synopsis
 
-```ruby
+```
   # The basic oh API. Calls to the API return parsed Nokogiri documents.
   require 'oh'
 
