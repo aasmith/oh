@@ -1,12 +1,15 @@
 #!/usr/bin/env ruby
 
+require 'rubygems'
 require 'oh'
 require 'ohbjects'
 Ohbjects.activate
 
 username, *symbols = ARGV
 
-abort "Usage: #{$0} [username] [symbol ...]" unless username and !symbols.empty?
+unless username and !symbols.empty?
+  abort "Usage: #{File.basename($0)} [username] [symbol ...]"
+end
 
 begin
   print "Password: "
