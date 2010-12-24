@@ -8,7 +8,7 @@ require 'rubygems'
 require 'nokogiri'
 
 class Oh
-  VERSION = '1.0.0'
+  VERSION = '1.0.1'
 
   HEADERS = {
     "Host" => "www.optionshouse.com",
