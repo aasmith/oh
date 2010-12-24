@@ -151,6 +151,14 @@ class TestOh < Test::Unit::TestCase
   end
 
   def test_messages
+    messages = %w(<message_one> <message_two>)
+    nested_messages = [messages, messages]
+
+    assert_equal "<EZList>#{messages.join}</EZList>",
+      @oh.messages(messages)
+
+    assert_equal "<EZList>#{nested_messages.flatten.join}</EZList>",
+      @oh.messages(nested_messages), "should flatten nested messages"
   end
 
   def test_account_raises_when_not_set

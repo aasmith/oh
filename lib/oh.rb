@@ -66,29 +66,41 @@ class Oh
   end
 
   def quote(symbol)
-    request(messages(
-      message_with_account("view.quote",
-                           :symbol => symbol,
-                           :description => true,
-                           :fundamentals => true),
-      message_with_token("echo", :symbol => symbol)
-    ))
+    request(messages(quote_messages(symbol)))
   end
 
   def option_chain(symbol)
-    request(message_with_account("view.chain",
-                                 :symbol => symbol,
-                                 :greeks => true,
-                                 :weeklies => true,
-                                 :quarterlies => true,
-                                 :quotesAfter => 0,
-                                 :ntm => 10, # near the money
-                                 :bs => true)) # black-scholes?
+    request(chain_message(symbol))
+  end
+
+  def quote_with_chain(symbol)
+    request(messages(quote_messages(symbol), chain_message(symbol)))
   end
 
   # TODO: send this every 120 seconds?
   def keep_alive
     request(message_with_account("auth.keepAlive"))
+  end
+
+  def quote_messages(symbol)
+    [
+      message_with_account("view.quote",
+                           :symbol => symbol,
+                           :description => true,
+                           :fundamentals => true),
+      message_with_token("echo", :symbol => symbol)
+    ]
+  end
+
+  def chain_message(symbol)
+    message_with_account("view.chain",
+                         :symbol => symbol,
+                         :greeks => true,
+                         :weeklies => true,
+                         :quarterlies => true,
+                         :quotesAfter => 0,
+                         :ntm => 10, # near the money
+                         :bs => true) # black-scholes?
   end
 
   def message_with_token(action, data = {})
@@ -116,7 +128,7 @@ class Oh
   end
 
   def messages(*messages)
-    "<EZList>#{messages.join}</EZList>"
+    "<EZList>#{messages.flatten.join}</EZList>"
   end
 
   def request_without_callbacks(body)
