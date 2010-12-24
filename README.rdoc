@@ -26,13 +26,15 @@ Currently provides a mechanism for pulling stock and option quotes.
   account = o.accounts.detect { |a| a.virtual? }
   o.account_id = account.id
 
-  # Bask is the glory of knowing the latest price for the 
+  # Bask in the glory of knowing the latest price for the 
   # iPath Dow Jones-AIG Coffee Total Return Sub-Index ETN.
   p o.quote("JO")
 
   # Do something like this every 120 seconds or so, otherwise your
   # token will expire.
   o.keep_alive
+
+Take a look at the contents of bin/oh for further inspiration.
 
 == Requirements
 
