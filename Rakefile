@@ -7,6 +7,6 @@ Hoe.spec 'oh' do
 
   extra_deps << %w(nokogiri)
 
-  self.readme_file = "README.markdown"
+  self.readme_file = "README.rdoc"
 end
 

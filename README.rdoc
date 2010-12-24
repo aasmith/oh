@@ -1,16 +1,15 @@
-# oh
+= oh
 
 * http://github.com/aasmith/oh
 
-## Description
+== Description
 
 An API for OptionsHouse (http://optionshouse.com).
 
 Currently provides a mechanism for pulling stock and option quotes.
 
-## Synopsis
+== Synopsis
 
-```
   # The basic oh API. Calls to the API return parsed Nokogiri documents.
   require 'oh'
 
@@ -34,20 +33,17 @@ Currently provides a mechanism for pulling stock and option quotes.
   # Do something like this every 120 seconds or so, otherwise your
   # token will expire.
   o.keep_alive
-```
 
-## Requirements
+== Requirements
 
 *  Nokogiri
 *  An OptionsHouse account
 
-## Install
+== Install
 
-```
   sudo gem install oh
-```
 
-## License
+== License
 
 Copyright (c) 2010 Andrew A. Smith
 
