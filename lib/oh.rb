@@ -10,8 +10,10 @@ require 'nokogiri'
 class Oh
   VERSION = '1.0.1'
 
+  HOST = "www2.optionshouse.com"
+
   HEADERS = {
-    "Host" => "www.optionshouse.com",
+    "Host" => HOST,
     "User-Agent" => "Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.2.12) Gecko/20101026 Firefox/3.6.12 (.NET CLR 3.5.30729)",
     "Accept" => "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
     "Accept-Language" => "en-us,en;q=0.5",
@@ -19,7 +21,7 @@ class Oh
     "Accept-Charset" => "ISO-8859-1,utf-8;q=0.7,*;q=0.7",
     "Connection" => "keep-alive",
     "Content-Type" => "text/xml; charset=UTF-8",
-    "Referer" => "https://www.optionshouse.com/tool/login/",
+    "Referer" => "https://www.optionshouse.com/securehost/tool/login/",
     "Cookie" => "blackbird={pos:1,size:0,load:null,info:true,debug:true,warn:true,error:true,profile:true}",
     "Pragma" => "no-cache",
     "Cache-Control" => "no-cache",
@@ -185,7 +187,7 @@ class Oh
   def connection
     return @client if defined? @client
 
-    client = Net::HTTP.new("www.optionshouse.com", 443)
+    client = Net::HTTP.new(HOST, 443)
     client.use_ssl = true
 
     if ENV["SSL_PATH"] && File.exist?(ENV["SSL_PATH"])
