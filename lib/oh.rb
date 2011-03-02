@@ -8,7 +8,7 @@ require 'rubygems'
 require 'nokogiri'
 
 class Oh
-  VERSION = '1.0.2'
+  VERSION = '1.0.3'
 
   HOST = "www.optionshouse.com"
 
