@@ -10,7 +10,7 @@ require 'nokogiri'
 class Oh
   VERSION = '1.0.2'
 
-  HOST = "www2.optionshouse.com"
+  HOST = "www.optionshouse.com"
 
   HEADERS = {
     "Host" => HOST,
