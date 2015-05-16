@@ -2,6 +2,14 @@
 
 * http://github.com/aasmith/oh
 
+== Defunct
+
+This project used the API predating the OptionsHouse & tradeMONSTER merger.
+Since that merger, the original API was turned off, in favour of tradeMONSTER's API.
+
+This code longer works with the OptionsHouse API that is in use today,
+and is kept purely for historical reference.
+
 == Description
 
 An API for OptionsHouse (http://optionshouse.com).
